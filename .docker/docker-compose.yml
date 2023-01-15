@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+    php:
+        build:
+            context: ./php
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ../:/var/www/fe/
+        networks:
+            - fe
+    nginx:
+        build:
+            context: ./nginx
+        volumes:
+            - ../:/var/www/fe/
+        ports:
+            - 80:80
+        networks:
+            - fe
+        env_file:
+            - .env.nginx.local
+
+networks:
+    fe:
